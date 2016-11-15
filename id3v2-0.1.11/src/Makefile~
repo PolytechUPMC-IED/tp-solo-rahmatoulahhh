@@ -1,0 +1,47 @@
+ID3 = home/sasl/shared/main3/env/tools/lib/
+CC = g++
+CFLAGS = -L$(ID3) -Wall -o  
+LDLIBS = -lid3 -lz
+CLIBS = id3v2
+
+all : $(CLIBS)
+
+id3v2: convert.o id3v2.o list.o genre.o create_map.o
+	$(CC) $(CFLAGS) $(CLIBS) convert.o list.o id3v2.o genre.o create_map.o $(LDLIBS)
+
+convert.o : convert .cpp
+	$(CC) -I/home/sasl/shared/main3/env/tools/include/id3/ \
+	-DVERSION="\"${VERSION} \ "" -c - o convert.o convert.cpp
+	
+id3v2.o : id3v2.cpp
+	$(CC) -I/home/sasl/shared/main3/env/tools/include/id3 \
+	-DVERSION="\"${VERSION} \ "" -c - o id3v2.o id3v2.cpp
+
+list.o : list.cpp
+	$(CC) -I/home/sasl/shared/main3/env/tools/include/id3 \
+	-DVERSION="\"${VERSION} \ "" -c - o list.o list.cpp
+
+genre.o : genre.cpp
+	$(CC) -I/home/sasl/shared/main3/env/tools/include/id3 \
+	-DVERSION="\"${VERSION} \ "" -c - o genre.o genre.cpp
+
+create_map.o : create_map.cpp
+	$(CC) -I/home/sasl/shared/main3/env/tools/include/id3 \
+	-DVERSION="\"${VERSION} \ "" -c - o create_map.o create_map.cpp
+
+#%.o: %.cpp
+#	$(CC) -I /home/sasl/shared/main3/env/tools/include/id3 \
+#	-DVERSION="\"${VERSION}\"" -c -o $@ $<
+
+install: id3v2
+	cd TP_solo
+	mkdir -p bin
+	cp -r $(CLIBS)  
+	nroff -man ../id3v2.1 > /home/sasl/eleves/main/3673871/Bureau/TP_solo/man/man1/id3v2.1
+
+distclean: 
+clean : 
+	rm -f $(CLIBS) *.o *~
+.PHONY : all clean
+
+

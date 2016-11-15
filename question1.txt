@@ -1,0 +1,11 @@
+#!/bin/bash
+#script
+# décompressage de l'archive
+tar xzvf music.tgz
+tar xzvf arch1.tgz arch2.tgz nom_repertoire
+#option qui permet d'avoir la liste des genres est : -L
+#!/bin/bash
+ARG= genre musical
+| echo `numéro correspont est: `
+#option -g pour ajouter le genre musical
+#
